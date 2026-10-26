@@ -1,0 +1,6 @@
+# dsh-phononspeak bundle patch: one host row that provides the dsh_phononspeak
+# tool, the speech queue, the HTTP routes (/dsh-phononspeak/*) and the prompt
+# section. The Web half is discovered from package.json `dsh.client`.
+- insert:
+    - id: phononspeak
+      name: 'dsh-phononspeak'

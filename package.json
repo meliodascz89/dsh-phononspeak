@@ -1,0 +1,65 @@
+{
+  "name": "dsh-phononspeak",
+  "version": "0.1.0",
+  "description": "Local, Czech-first voice channel for DeepSeek Harness agents: reads answer summaries aloud, calls you to the computer when it needs a decision, with its own settings UI, queue and stop.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "skills",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "README.cs.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "author": "Michal Ožuch",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "tts",
+    "voice",
+    "czech",
+    "supertonic",
+    "piper",
+    "pocket-tts",
+    "accessibility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meliodascz89/dsh-phononspeak.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.1.1-rc.2 <0.3.0",
+    "@deepseek-ai/schemastery": ">=3.18.0 <4.0.0"
+  }
+}
