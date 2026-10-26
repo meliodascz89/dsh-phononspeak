@@ -6,6 +6,17 @@ All notable changes to `dsh-phononspeak` are documented here. The format follows
 
 ## [0.1.0] - 2026-10-26
 
+### Fixed after the first live install
+
+- **Transport**: the Web half now talks to the Host through a Typert Remote namespace
+  (`phononspeak/*`) over the Connection carrier. A plain `fetch` from the Desktop renderer never
+  reaches the Host's route table, and `connection.rpc.intercept('/api', …)` is owned by the Typert
+  Gateway — a second interceptor is a fatal Host load failure. The HTTP routes remain for `dsh web`.
+- **Crash safety**: the async initializer, the queue worker and every remote method settle into a value
+  or a stored error, so no plugin path can reject into the Host.
+- **Autoplay fallback**: a blocked `play()` is reported once per job and the Host speaks that job
+  through `afplay`, instead of leaving the summary silent.
+
 First release: a local, Czech-first voice channel for a DeepSeek Harness agent.
 
 ### Added

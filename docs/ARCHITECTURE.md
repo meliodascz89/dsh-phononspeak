@@ -228,10 +228,14 @@ Request bodies are capped at 1 MB and must be JSON; every failure returns `{ok:f
 ### Autoplay
 
 Browsers refuse `audio.play()` without a user gesture, and a voice plugin that silently refuses to speak
-is indistinguishable from a broken plugin. The page spends the **first** gesture (pointerdown, keydown or
-touchstart, anywhere) on a 10 ms silent WAV, after which model-driven playback is allowed. Until that
-gesture happens the overlay shows a Play button instead of pretending it spoke, and the Host gives a
-browser-owned job 45 seconds to be picked up before clearing it so the queue cannot stall.
+is indistinguishable from a broken plugin. Three layers deal with that:
+
+1. The page spends the **first** gesture (pointerdown, keydown or touchstart, anywhere) on a 10 ms silent
+   WAV, after which model-driven playback is allowed.
+2. If `play()` still rejects, the page reports `action: "blocked"` once per job and the Host hands that
+   job to the system output — the summary is spoken through `afplay` instead of going unheard.
+3. If neither side can play, the overlay shows a Play button and the Host clears the browser-owned job
+   after 45 seconds so the queue cannot stall.
 
 ## Choosing an output
 
