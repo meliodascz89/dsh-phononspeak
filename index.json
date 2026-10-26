@@ -59,11 +59,11 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793016336,
+          "publishTimestamp": 1793016571,
           "source": {
             "type": "git",
             "url": "https://github.com/meliodascz89/dsh-phononspeak",
-            "commit": "b0cfde64a032ae48b08d919b5844b598a277dd03"
+            "commit": "9dd7d066db9ca6ab6bf86f52994bf72dc0c10f2a"
           },
           "engines": {
             "dsh": ">=0.2.1-rc.3 <0.3.0-0"
