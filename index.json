@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Phononspeak",
+    "cs": "Phononspeak"
+  },
+  "description": {
+    "en": "Local, Czech-first voice channel for DeepSeek Harness agents: summary read-aloud, attention calls, own settings UI.",
+    "cs": "Lokální český hlasový kanál pro agenty DeepSeek Harness: čtení shrnutí, volání k počítači, vlastní nastavení."
+  },
+  "metadata": {
+    "categories": {
+      "voice": {
+        "title": {
+          "en": "Voice & Audio",
+          "cs": "Hlas a audio"
+        }
+      }
+    },
+    "labels": {
+      "git": {
+        "title": {
+          "en": "Git install",
+          "cs": "Instalace z Gitu"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-phononspeak",
+      "title": {
+        "en": "Phononspeak",
+        "cs": "Phononspeak"
+      },
+      "description": {
+        "en": "Reads answer summaries aloud and calls you to the computer when the agent needs a decision. Queue, stop, own UI. Local engines only.",
+        "cs": "Přečte shrnutí odpovědi a zavolá tě k počítači, když agent potřebuje rozhodnutí. Fronta, stop, vlastní UI. Jen lokální enginy."
+      },
+      "author": "Michal Ožuch",
+      "homepage": "https://github.com/meliodascz89/dsh-phononspeak",
+      "repository": {
+        "url": "https://github.com/meliodascz89/dsh-phononspeak"
+      },
+      "icon": "./icon.svg",
+      "metadata": {
+        "category": "voice",
+        "labels": [
+          "git"
+        ],
+        "keywords": [
+          "tts",
+          "voice",
+          "czech",
+          "summary",
+          "accessibility"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793016336,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/meliodascz89/dsh-phononspeak",
+            "commit": "b0cfde64a032ae48b08d919b5844b598a277dd03"
+          },
+          "engines": {
+            "dsh": ">=0.2.1-rc.3 <0.3.0-0"
+          }
+        }
+      ]
+    }
+  ]
+}
