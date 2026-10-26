@@ -90,3 +90,38 @@ K dispozici: `settings.section` (vlastní stránka v nastavení), `shell.overlay
 nástroje — vlastní karta pro `dsh_phononspeak`), `conversation.chat.turnTail`, `settings.general.item`,
 `conversation.view`, `plugins.bundle.config`. **Client nemá `settings` službu** → stav i zápis konfigurace
 půjdou přes HTTP routes hostu (`/dsh-phononspeak/state`, `/config`), host je aplikuje přes `configEditor`.
+
+---
+
+## Zjištění z prvního živého nasazení (2026-10-26 13:00)
+
+### D-016 — Pád aplikace: `connection.rpc.intercept` je obsazený
+První nainstalovaná verze volala `connection.rpc.intercept('/api', …)`. Kanál `/api` má ale jediného
+interceptora — Typert Gateway — a druhá registrace hází
+`connection: shared RPC channel "/api" already has an intercepto r`. Odmítnutý promise v asynchronním
+inicializátoru se stal unhandled rejection, což 0.2.x vyhodnotí jako **fatal load failure** a restartuje
+celou desktopovou aplikaci. Řešení: vlastní Typert Remote namespace `phononspeak/*` (stejný mechanismus
+jako `dsh-rea`), každá metoda obalená do `{ok:false,error}` a `.catch()` na inicializaci i na frontě.
+
+### D-017 — Desktop renderer neposílá `fetch` na HTTP routes
+Renderer běží na schématu `dsh-app://`; relativní `fetch('/dsh-phononspeak/state')` se k HTTP route
+Hostu vůbec nedostane (dokumentace `dsh-host-webserver`: „Electron loads dist over file:// and carries
+fetch over an IPC bridge"). HTTP prefix route zůstává jen pro `dsh web` a curl; UI používá Connection RPC.
+
+### D-018 — Licence `say` je odmítnutí, ne varování
+`pickEngine(forced)` dřív výslovně zvolený `engine=say` propustil. Teď je odmítnutý i explicitně
+(`refused: "licence"`), protože varování není licence. Dokumentace přepsána na „refusal, not a warning".
+
+### D-019 — Pocket nikdy nebere hlas sám
+`pickVoice` vracel `voices[0]`, což je u pocketu reference reálného poslance. Teď pocket dostane hlas jen
+z registrovaných klonů; `auto` ho bez klonu přeskočí a explicitní požadavek vrátí chybu.
+
+### D-020 — Audio cache má skutečný rozpočet
+`LIMITS.audioCacheBytes` (200 MB) se dřív nečetl; prune bylo podle počtu a jen v rámci běhu. Teď se
+prune řídí bajty a při startu se uklidí i soubory z předchozích běhů.
+
+### D-022 — Ověřený end-to-end řetěz (po opravě)
+`dsh_phononspeak action=summary` → supertonic syntéza (44,1 kHz WAV v `~/.dsh/phononspeak/audio`) →
+RPC `phononspeak/audio` → přehrávač v UI → `finished` → `current` se vyčistí. `action=attention`
+zobrazí notifikaci, banner a opakuje přes `afplay` podle `attentionRepeatSec`. `doctor` hlásí
+`rpcRegistered: true`; `engine=say` je odmítnutý; `presence` z prohlížeče přepíná `output` na `browser`.
