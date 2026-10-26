@@ -3,3 +3,6 @@ node_modules/
 .DS_Store
 /tmp/
 /out/
+PROJECT_BRIEF.md
+QUESTIONS.md
+DECISIONS.md
